@@ -1,0 +1,8 @@
+{
+  "name": "SurviveAbility",
+  "description": "NodeJS app for Fantasy Survivor Drafts",
+  "repository": "https://github.com/meganmcpherson/SurviveAbility-Web.git",
+  "logo": "",
+  "keywords": ["node", "express", "heroku"],
+  "image": ""
+}
