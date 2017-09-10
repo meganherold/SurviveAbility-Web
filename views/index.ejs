@@ -11,12 +11,10 @@
 </head>
 
 <script language="JavaScript">
-var socket = io.connect('http://localhost:4200');
+var socket = io();
 socket.on('refreshCaptains', function(data) {
    displayCaptains(data);
 });
-
-var g_serviceURL = "http://localhost:5000";
 
 function displayCaptains(responseText) {
   var captainsList = document.getElementById("captainsList")

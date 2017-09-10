@@ -14,7 +14,7 @@ io.on('connection', function(client) {
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json())
 
-app.set('port', (process.env.PORT || 5000));
+app.set('port', 4200);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
@@ -22,9 +22,9 @@ app.get('/', function(request, response) {
   response.render('index');
 });
 
-app.get('/api/captains', function (request, response) {
+io.on('get/captains', function(client) {
    fs.readFile( __dirname + "/data/captains.json", 'utf8', function (error, data) {
-       response.end(data);
+       client.emit("refreshCaptains", data);
    });
 });
 
@@ -69,7 +69,7 @@ app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
 });
 
-server.listen(4200);
+server.listen(5000);
 
 function writeAndEmit(database) {
   fs.writeFile(__dirname + "/data/captains.json", JSON.stringify(database), function(error) {
