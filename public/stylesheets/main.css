@@ -37,3 +37,11 @@
 .jumbotron .lang-logo img {
   max-width: 100%;
 }
+
+nav .container {
+  margin-left: 40px;
+}
+
+nav .container h3 {
+  color: white;
+}

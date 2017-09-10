@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>SurviveAbility</title>
+  <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+  <script src="/jquery/dist/jquery.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <link rel="stylesheet" type="text/css" href="/stylesheets/main.css" />
+</head>
+
+<script language="JavaScript">
+var socket = io.connect('http://localhost:4200');
+socket.on('refreshCaptains', function(data) {
+   displayCaptains(data);
+});
+
+var g_serviceURL = "http://localhost:5000";
+
+function displayCaptains(responseText) {
+  var captainsList = document.getElementById("captainsList")
+
+  //clear it out
+  while (captainsList.firstChild) {
+    captainsList.removeChild(captainsList.firstChild);
+  }
+  //add them back
+  var response = JSON.parse(responseText);
+  for(const captain of response.captains) {
+    var li = document.createElement("li");
+    li.className = "list-group-item"
+    captainsList.appendChild(li);
+    li.innerHTML = captain.name;
+  }
+}
+</script>
+
+<body onload="">
+  <nav class="navbar navbar-default navbar-static-top navbar-inverse">
+    <div class="container">
+      <ul class="nav navbar-nav">
+        <li>
+          <h3>SurviveAbility</h3>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="navbar-right">
+        </li>
+      </ul>
+    </div>
+  </nav>
+<div class="container">
+  <h3>Captains</h3>
+  <ul class="list-group" id="captainsList">
+  </ul>
+</div>
+</body>
+</html>
