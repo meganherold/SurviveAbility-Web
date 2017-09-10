@@ -30,7 +30,7 @@ app.get('/', function(request, response) {
 
 app.get('/api/captains', function (request, response) {
    fs.readFile( __dirname + "/data/captains.json", 'utf8', function (error, data) {
-       client.emit("refreshCaptains", data);
+       response.end(data);
    });
 });
 
