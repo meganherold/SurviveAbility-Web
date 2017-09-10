@@ -1,9 +1,22 @@
-var express = require('express');
-var app = express();
-var fs = require("fs");
-var bodyParser = require('body-parser')
-var server = require('http').createServer(app);
-var io = require('socket.io')(server);
+
+const express = require('express');
+const socketIO = require('socket.io');
+const http = require('http');
+const fs = require("fs");
+const bodyParser = require('body-parser')
+
+var app = module.exports.app = express();
+
+app.use(express.static(__dirname + '/public'));
+app.use(bodyParser.json())
+app.set('port', process.env.PORT || 5000);
+app.set('views', __dirname + '/views');
+app.set('view engine', 'ejs');
+
+var server = app.listen(app.get('port'), function() {
+  console.log('Node app is running on port', app.get('port'));
+});
+var io = socketIO.listen(server);
 
 io.on('connection', function(client) {
   fs.readFile( __dirname + "/data/captains.json", 'utf8', function (error, data) {
@@ -11,18 +24,11 @@ io.on('connection', function(client) {
   });
 });
 
-app.use(express.static(__dirname + '/public'));
-app.use(bodyParser.json())
-
-app.set('port', 4200);
-app.set('views', __dirname + '/views');
-app.set('view engine', 'ejs');
-
 app.get('/', function(request, response) {
   response.render('index');
 });
 
-io.on('get/captains', function(client) {
+app.get('/api/captains', function (request, response) {
    fs.readFile( __dirname + "/data/captains.json", 'utf8', function (error, data) {
        client.emit("refreshCaptains", data);
    });
@@ -64,12 +70,6 @@ app.delete('/api/deleteAllCaptains', function (request, response) {
       response.end()
   });
 });
-
-app.listen(app.get('port'), function() {
-  console.log('Node app is running on port', app.get('port'));
-});
-
-server.listen(5000);
 
 function writeAndEmit(database) {
   fs.writeFile(__dirname + "/data/captains.json", JSON.stringify(database), function(error) {
