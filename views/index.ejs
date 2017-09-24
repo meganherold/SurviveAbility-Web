@@ -34,7 +34,7 @@ function displayCaptains(responseText) {
 </script>
 
 <body onload="">
-  <nav class="navbar navbar-default navbar-static-top navbar-inverse">
+  <nav class="navbar navbar-default navbar-static-top">
     <div class="container">
       <ul class="nav navbar-nav">
         <li>
@@ -47,10 +47,13 @@ function displayCaptains(responseText) {
       </ul>
     </div>
   </nav>
-<div class="container">
-  <h3>Captains</h3>
-  <ul class="list-group" id="captainsList">
-  </ul>
-</div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Captains</h3>
+    </div>
+    <div class="panel-body">
+      <ul class="list-group" id="captainsList"></ul>
+    </div>
+  </div>
 </body>
 </html>
